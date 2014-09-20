@@ -1,19 +1,19 @@
-#version 150
+#version 120
 attribute  vec3 in_Position;
 attribute  vec2 in_UV;
 attribute  vec3 in_Normal;
 attribute  vec3 xyz;
 
-out vec3 local;
-out vec3 normal;
-out vec2 UV;
-out vec3 Position_worldspace;
-out vec3 EyeDirection_cameraspace;
-out vec3 LightDirection_cameraspace;
-out vec4 ShadowCoord;
-out vec3 Normal_cameraspace;
-out float height;
-out float stone;
+varying vec3 local;
+varying vec3 normal;
+varying vec2 UV;
+varying vec3 Position_worldspace;
+varying vec3 EyeDirection_cameraspace;
+varying vec3 LightDirection_cameraspace;
+varying vec4 ShadowCoord;
+varying vec3 Normal_cameraspace;
+varying float height;
+varying float stone;
 
 uniform mat4 V;
 uniform vec3 LightInvDirection_worldspace;

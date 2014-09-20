@@ -101,8 +101,8 @@ void PrintGLError()
 	if ((errCode = glGetError()) != GL_NO_ERROR) {
 		errString = gluErrorString(errCode);
 		fprintf(stderr, "OpenGL Error: %s\n", errString);
-		int hold;
-		std::cin >> hold;
+		//int hold;
+		//std::cin >> hold;
 	}
 }
 
@@ -242,36 +242,29 @@ void AddChunkToList(int x, int z, GLfloat* blocks)
 
 	int cBlockIndex = chunk->GetBlocks(cX, cZ);
 
+	char*** blockArray = chunk->chunks[cX][cZ];
 	for (int i = 0; i < Chunk::SIDE; i++)
 	{
 		for (int j = 0; j < Chunk::SIDE; j++)
 		{
-			//int y = chunk->blocks[cBlockIndex + Chunk::SIDE * i + j];
-			//int ind = Chunk::PosToIndex(cX * Chunk::SIDE + i, cZ * Chunk::SIDE + j);
-			//int y = chunk->blocks[ind];
-
-			int y = chunk->blocks[cX][cZ][i * Chunk::SIDE + j];
-
-			//std::cout << y << std::endl;
-
-			int max = y - 1;
-			y -= 0;
-
-			while (y > max)
+			for (int k = 0; k < Chunk::SIDE; k++)
 			{
-				//int * dx = new int;
-				//int * dz = new int;
+				if (blockArray[i][j][k] == 1 && 
+					(k == Chunk::SIDE - 1 ||
+					blockArray[i][j][k + 1] == 0 ||
+					i == Chunk::SIDE - 1 || i == 0 ||
+					blockArray[i + 1][j][k] == 0 ||
+					blockArray[i - 1][j][k] == 0 ||
+					j == Chunk::SIDE - 1 || j == 0 ||
+					blockArray[i][j + 1][k] == 0 ||
+					blockArray[i][j - 1][k] == 0))
+				{
+					blocks[nextIndex * 3 + 0] = cX * Chunk::SIDE + i;
+					blocks[nextIndex * 3 + 1] = k;
+					blocks[nextIndex * 3 + 2] = cZ * Chunk::SIDE + j;
 
-				//chunk->IndexToPos(ind, dx, dz);
-				//DrawCube(*dx, y, *dz, Projection, View);
-
-				blocks[nextIndex * 3 + 0] = cX * Chunk::SIDE + i;
-				blocks[nextIndex * 3 + 1] = y;
-				blocks[nextIndex * 3 + 2] = cZ * Chunk::SIDE + j;
-
-				nextIndex += 1;
-				//DrawCube(cX * Chunk::SIDE + i, y, cZ * Chunk::SIDE + j, shadow);
-				y--;
+					nextIndex += 1;
+				}
 			}
 		}
 	}
@@ -317,8 +310,10 @@ void MoveRelative(KeyCode key)
 
 	if (chunk->IsBlockAt(newX + 0.5f, pos.y, pos.z + 0.5f))
 	{
-		//newX = pos.x;// roundf(newX + 0.5f);
-		pos.y += 1.05f;
+		if (!chunk->IsBlockAt(newX + 0.5f, pos.y + 1, pos.z + 0.5f))
+			pos.y += 1.05f;
+		else
+			newX = pos.x;
 	}
 
 	pos.x = newX;
@@ -327,8 +322,10 @@ void MoveRelative(KeyCode key)
 
 	if (chunk->IsBlockAt(pos.x + 0.5f, pos.y, newZ + 0.5f))
 	{
-		//newZ = pos.z;// roundf(newZ + 0.5f);
-		pos.y += 1.05f;
+		if (!chunk->IsBlockAt(pos.x + 0.5f, pos.y + 1, newZ + 0.5f))
+			pos.y += 1.05f;
+		else
+			newZ = pos.z;
 	}
 
 	pos.z = newZ;
@@ -390,6 +387,31 @@ void GameLoop()
 					break;
 
 				case SDLK_f:
+				{
+					float pR = pitch * (M_PI / 180);
+					float yR = yaw * (M_PI / 180);
+
+					float sR = std::sin(pR);
+					float cR = -std::cos(pR);
+
+					for (int i = 1; i < 10; i++)
+					{
+						float lX = pos.x + i * sR;
+						float lZ = pos.z + i * cR;
+						float lY = pos.y + 1.8f + i * yR;
+
+						if (chunk->IsBlockAt(lX + 0.5f, lY + 0.5f, lZ + 0.5f))
+						{
+
+							chunk->PutBlockAt(lX - sR + 0.5f, lY - yR + 0.5f, lZ - cR + 0.5f, 1);
+							break;
+						}
+					}
+					break;
+				}
+
+				case SDLK_r:
+				{
 					float pR = pitch * (M_PI / 180);
 					float yR = yaw * (M_PI / 180);
 
@@ -402,11 +424,12 @@ void GameLoop()
 						if (chunk->IsBlockAt(lX, lY, lZ))
 						{
 
-							chunk->PutBlockAt(lX, lY, lZ);
+							chunk->PutBlockAt(lX, lY, lZ, 0);
 							break;
 						}
 					}
 					break;
+				}
 				}
 			}
 
@@ -475,20 +498,8 @@ void GameLoop()
 
 		lookY = pos.y + yawRad;
 
-/*		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glUseProgram(blokProgramID);
-
-		// Render to screen
-		glm::mat4 Projection = glm::perspective(80.0f, (float)w / (float)h, 1.0f, 10000.0f);
-		glm::mat4 View = glm::lookAt(glm::vec3(pos.x, pos.y + 1.8f, pos.z), glm::vec3(lookX, lookY + 1.8f, lookZ), glm::vec3(0, 1, 0));
-
-		glm::mat4 VP = Projection * View;
-		glUniformMatrix4fv(cubeVPMatrixID, 1, GL_FALSE, &VP[0][0]);
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		*/
-
-		//GLfloat* blocks = new GLfloat[Chunk::MAX_BLOCKS];
+		unsigned int wBuildStart = SDL_GetTicks();
+		// Build list of blocks
 		nextIndex = 0;
 
 		for (int x = (pos.x - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
@@ -498,6 +509,8 @@ void GameLoop()
 				AddChunkToList(x, z, blocks);
 			}
 		}
+
+		std::cout << (SDL_GetTicks() - wBuildStart) << std::endl;
 
 		BLOCKS = nextIndex;
 		unsigned int start = SDL_GetTicks();
@@ -552,7 +565,7 @@ void GameLoop()
 		// Use our shader
 		glUseProgram(blokProgramID);
 
-		glm::mat4 Projection = glm::perspective(80.0f, (float)w / (float)h, 1.0f, 10000.0f);
+		glm::mat4 Projection = glm::perspective(80.0f, (float)w / (float)h, 0.1f, 10000.0f);
 		glm::mat4 View = glm::lookAt(glm::vec3(pos.x, pos.y + 1.8f, pos.z), glm::vec3(lookX, lookY + 1.8f, lookZ), glm::vec3(0, 1, 0));
 
 		glm::mat4 VP = Projection * View;
@@ -590,7 +603,7 @@ void GameLoop()
 		
 		SDL_GL_SwapWindow(window);
 
-		std::cout << SDL_GetTicks() - start << std::endl;
+		//std::cout << SDL_GetTicks() - start << std::endl;
 
 		SDL_Delay(10);
 		checkSDLError(__LINE__);
@@ -606,6 +619,8 @@ bool InitResources()
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
 	glDepthFunc(GL_LESS);
+
+	//glEnable(GL_BLEND); glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Create and compile our GLSL program from the shaders
 	blokProgramID = LoadShaders("Blok.vert", "Blok.frag");
@@ -727,12 +742,12 @@ int main(int argc, char *argv[])
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-	//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 4);
 	
 
 	window = SDL_CreateWindow(PROGRAM_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		w, h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP
+		w, h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN// | SDL_WINDOW_FULLSCREEN_DESKTOP
 		);
 
 	if (!window)
@@ -764,7 +779,7 @@ int main(int argc, char *argv[])
 	}
 
 	//std::cin >> CHUNK_LOAD_DIST;
-	CHUNK_LOAD_DIST = 56;
+	CHUNK_LOAD_DIST = 1;// 56;
 
 	GameLoop();
 	ClearResources();

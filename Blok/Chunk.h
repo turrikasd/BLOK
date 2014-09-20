@@ -6,11 +6,11 @@
 class Chunk
 {
 public:
-	static const int WORLD_SIZE = 8192;
-	static const int MAX_BLOCKS = 65536;//131072;
+	static const int WORLD_SIZE = 8192;//8192;
 	static const int HALF_WORLD = WORLD_SIZE / 2;
-	static const int SIDE = 2;
+	static const int SIDE = 64;
 	static const int CHUNKS = WORLD_SIZE / SIDE;
+	static const int MAX_BLOCKS = 2097152;// 65536;
 
 	static int PosToIndex(int x, int z);
 	static void IndexToPos(int index, int *x, int * z);
@@ -21,11 +21,11 @@ public:
 	Chunk *Instance;
 
 	bool IsBlockAt(int x, int y, int z);
-	void PutBlockAt(int x, int y, int z);
+	void PutBlockAt(int x, int y, int z, char type);
 
 	void GenBlocks(int x, int z);
 	int GetBlocks(int x, int z);
-	int blocks[CHUNKS][CHUNKS][SIDE * SIDE];
+	char*** chunks[CHUNKS][CHUNKS];
 
 private:
 	PerlinNoise pn;

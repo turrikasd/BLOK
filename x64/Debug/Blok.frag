@@ -1,4 +1,4 @@
-#version 150
+#version 120
 // It was expressed that some drivers required this next line to function properly
 precision highp float;
 
@@ -115,7 +115,7 @@ void main()
 		
 		// being fully in the shadow will eat up 4*0.2 = 0.8
 		// 0.2 potentially remain, which is quite dark.
-		visibility -= 0.2*(1.0-shadow2D( shadowMap, vec3(ShadowCoord.xy + poissonDisk[index]/100.0 ,  (ShadowCoord.z-bias)/ShadowCoord.w )).r);
+		visibility -= 0.2*(1.0-shadow2D( shadowMap, vec3(ShadowCoord.xy + poissonDisk[index]/500.0 ,  (ShadowCoord.z-bias)/ShadowCoord.w )).r);
 	}
 
 	// For spot lights, use either one of these lines instead.
@@ -125,12 +125,15 @@ void main()
 	visibility -= height;
 	
 	gl_FragColor.rgb = 
+	//vec3 col =
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
 		visibility * MaterialDiffuseColor * LightColor * LightPower * cosTheta+
 		// Specular : reflective highlight, like a mirror
 		visibility * MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5);
+		
+	//gl_FragColor = vec4(col, 1);
 	
 /*	
 	vec3 difPos = abs(local * 2 - normal);
