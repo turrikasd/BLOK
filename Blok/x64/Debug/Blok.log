@@ -1,0 +1,37 @@
+﻿Build started 20.9.2014 2:42:27.
+     1>Project "C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\Blok\Blok.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\include" /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Chunk.cpp main.cpp
+         main.cpp
+     1>main.cpp(268): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(269): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(270): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(284): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(315): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(318): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(328): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(393): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(394): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(402): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(405): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(470): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(471): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(494): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(496): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(516): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         Chunk.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\x64\Debug\Blok.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\lib" glew32.lib opengl32.lib glu32.lib SDL2.lib SDL2main.lib assimp.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\x64\Debug\Blok.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\x64\Debug\Blok.lib" /MACHINE:X64 x64\Debug\Chunk.obj
+         x64\Debug\main.obj
+         x64\Debug\PerlinNoise.obj
+         x64\Debug\shader.obj
+         x64\Debug\TextureLoader.obj
+         Blok.vcxproj -> C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\x64\Debug\Blok.exe
+     1>Done Building Project "C:\Users\Despite\Documents\Visual Studio 2013\Projects\Blok\Blok\Blok.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.06
