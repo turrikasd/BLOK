@@ -8,7 +8,8 @@ class Chunk
 public:
 	static const int WORLD_SIZE = 8192;//8192;
 	static const int HALF_WORLD = WORLD_SIZE / 2;
-	static const int SIDE = 64;
+	static const int SIDE = 32;
+	static const int HEIGHT = 256;
 	static const int CHUNKS = WORLD_SIZE / SIDE;
 	static const int MAX_BLOCKS = 2097152;// 65536;
 

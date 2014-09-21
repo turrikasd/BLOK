@@ -27,7 +27,7 @@ bool Chunk::IsBlockAt(int x, int y, int z)
 	int cX = x / SIDE;
 	int cZ = z / SIDE;
 
-	if (generated[cX][cZ] == NULL || !generated[cX][cZ] || y > Chunk::SIDE)
+	if (generated[cX][cZ] == NULL || !generated[cX][cZ] || y > Chunk::HEIGHT)
 		return false;
 
 	if (y < 0)
@@ -78,7 +78,7 @@ void Chunk::GenBlocks(int x, int z)
 		blocks[xx] = new char*[SIDE];
 		for (int yy = 0; yy < SIDE; yy++)
 		{
-			blocks[xx][yy] = new char[SIDE];
+			blocks[xx][yy] = new char[HEIGHT];
 		}
 	}
 
@@ -92,7 +92,7 @@ void Chunk::GenBlocks(int x, int z)
 
 			int y = (int)(n * 100);
 
-			for (int k = 0; k < SIDE; k++)
+			for (int k = 0; k < HEIGHT; k++)
 			{
 				blocks[i][j][k] = (y > k) ? 1 : 0;
 			}

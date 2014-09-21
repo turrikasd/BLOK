@@ -10,6 +10,7 @@
 #include "PerlinNoise.h"
 #include <iostream>
 #include <math.h>
+#include <thread>
 
 /* assimp include files. These three are usually needed. */
 #include <assimp/cimport.h>
@@ -25,10 +26,17 @@
 int w = 1024;
 int h = 512;
 
-//const int Chunk::MAX_BLOCKS = 524288;
-int BLOCKS = 0;
+int BLOCKS0 = 0;
+int BLOCKS1 = 0;
+bool blockBuilderDone = true;
+int blockList = -1;
+GLfloat blocks0[Chunk::MAX_BLOCKS * 3];
+GLfloat blocks1[Chunk::MAX_BLOCKS * 3];
+
+std::thread blockBuilder;
+int blockFrameCount = -1;
+
 int CHUNK_LOAD_DIST = 32;
-GLfloat blocks[Chunk::MAX_BLOCKS * 3];
 glm::vec3 pos = glm::vec3(Chunk::HALF_WORLD, 85.0f, Chunk::HALF_WORLD);
 float pitch = 0.0f;
 float yaw = 0.0f;
@@ -129,7 +137,7 @@ void checkSDLError(int line = -1)
 #endif
 }
 
-void RenderBlocks(GLfloat* blockPositionData, GLuint vertexAttribID, GLuint xyzAttribID, bool shadow)
+void RenderBlocks(GLfloat* blockPositionData, GLuint vertexAttribID, GLuint xyzAttribID, int numBlocks, bool shadow)
 {
 	// Update the buffers that OpenGL uses for rendering.
 	// There are much more sophisticated means to stream data from the CPU to the GPU, 
@@ -137,7 +145,7 @@ void RenderBlocks(GLfloat* blockPositionData, GLuint vertexAttribID, GLuint xyzA
 	// http://www.opengl.org/wiki/Buffer_Object_Streaming
 	glBindBuffer(GL_ARRAY_BUFFER, blockPositionBuffer);
 	glBufferData(GL_ARRAY_BUFFER, Chunk::MAX_BLOCKS * 3 * sizeof(GLfloat), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
-	glBufferSubData(GL_ARRAY_BUFFER, 0, BLOCKS * 3 * sizeof(GLfloat), blockPositionData);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, numBlocks * 3 * sizeof(GLfloat), blockPositionData);
 
 	// Bind our texture in Texture Unit 0
 	//glActiveTexture(GL_TEXTURE0);
@@ -223,7 +231,7 @@ void RenderBlocks(GLfloat* blockPositionData, GLuint vertexAttribID, GLuint xyzA
 		scene->mMeshes[0]->mNumFaces * 3,    // count
 		GL_UNSIGNED_INT,   // type
 		(void*)0,           // element array buffer offset
-		BLOCKS
+		numBlocks
 		);
 
 	glDisableVertexAttribArray(vertexAttribID);
@@ -247,10 +255,10 @@ void AddChunkToList(int x, int z, GLfloat* blocks)
 	{
 		for (int j = 0; j < Chunk::SIDE; j++)
 		{
-			for (int k = 0; k < Chunk::SIDE; k++)
+			for (int k = 0; k < Chunk::HEIGHT; k++)
 			{
 				if (blockArray[i][j][k] == 1 && 
-					(k == Chunk::SIDE - 1 ||
+					(k == Chunk::HEIGHT - 1 ||
 					blockArray[i][j][k + 1] == 0 ||
 					i == Chunk::SIDE - 1 || i == 0 ||
 					blockArray[i + 1][j][k] == 0 ||
@@ -331,6 +339,29 @@ void MoveRelative(KeyCode key)
 	pos.z = newZ;
 	//pos.x += 0.5f * std::sin(pRad);
 	//pos.z += 0.5f * -std::cos(pRad);
+}
+
+void BuildBlockList(GLfloat* blocks, int* blockCount)
+{
+	nextIndex = 0;
+
+	for (int x = (pos.x - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
+	{
+		for (int z = (pos.z - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z < (pos.z + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z++)
+		{
+			AddChunkToList(x, z, blocks);
+		}
+	}
+
+	*blockCount = nextIndex;
+	
+	
+	if (blockList == -1 || blockList == 1)
+		blockList = 0;
+	else
+		blockList = 1;
+
+	blockBuilderDone = true;
 }
 
 void GameLoop()
@@ -499,20 +530,27 @@ void GameLoop()
 		lookY = pos.y + yawRad;
 
 		unsigned int wBuildStart = SDL_GetTicks();
-		// Build list of blocks
-		nextIndex = 0;
 
-		for (int x = (pos.x - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
+		// Build list of blocks
+		if (blockBuilderDone && blockFrameCount == -1 || blockFrameCount >= 6)
 		{
-			for (int z = (pos.z - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z < (pos.z + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z++)
+			blockBuilderDone = false;
+			blockFrameCount = 0;
+
+			if (blockList == 0)
 			{
-				AddChunkToList(x, z, blocks);
+				blockBuilder = std::thread(BuildBlockList, blocks1, &BLOCKS1);
 			}
+
+			else if (blockList == -1 || 1)
+			{
+				blockBuilder = std::thread(BuildBlockList, blocks0, &BLOCKS0);
+			}
+
+			if (blockList != -1)
+				blockBuilder.detach();
 		}
 
-		std::cout << (SDL_GetTicks() - wBuildStart) << std::endl;
-
-		BLOCKS = nextIndex;
 		unsigned int start = SDL_GetTicks();
 
 		// Render shadows
@@ -546,11 +584,21 @@ void GameLoop()
 
 		glUniformMatrix4fv(depthMatrixID, 1, GL_FALSE, &depthMVP[0][0]);
 
-		// Render shadows
-		RenderBlocks(blocks, depthVertexID, depthXYZID, true);
+		if (blockList == -1)
+		{
+			blockBuilder.join();
+		}
 
+		if (blockList == 0)
+		{
+			RenderBlocks(blocks0, depthVertexID, depthXYZID, BLOCKS0, true);
+		}
+
+		else
+		{
+			RenderBlocks(blocks1, depthVertexID, depthXYZID, BLOCKS1, true);
+		}
 		
-
 		//
 		// Render image
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -598,12 +646,22 @@ void GameLoop()
 		glBindTexture(GL_TEXTURE_2D, depthTexture);
 		glUniform1i(ShadowMapID, 2);
 
-		RenderBlocks(blocks, cubeVertexAttribID, xyzID, false);
+
+		if (blockList == 0)
+		{
+			RenderBlocks(blocks0, cubeVertexAttribID, xyzID, BLOCKS0, false);
+		}
+		
+		else
+		{
+			RenderBlocks(blocks1, cubeVertexAttribID, xyzID, BLOCKS1, false);
+		}
 
 		
 		SDL_GL_SwapWindow(window);
+		blockFrameCount++;
 
-		//std::cout << SDL_GetTicks() - start << std::endl;
+		std::cout << (SDL_GetTicks() - wBuildStart) << std::endl;
 
 		SDL_Delay(10);
 		checkSDLError(__LINE__);
@@ -747,7 +805,7 @@ int main(int argc, char *argv[])
 	
 
 	window = SDL_CreateWindow(PROGRAM_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		w, h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN// | SDL_WINDOW_FULLSCREEN_DESKTOP
+		w, h, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP
 		);
 
 	if (!window)
@@ -779,7 +837,7 @@ int main(int argc, char *argv[])
 	}
 
 	//std::cin >> CHUNK_LOAD_DIST;
-	CHUNK_LOAD_DIST = 1;// 56;
+	CHUNK_LOAD_DIST = 2;// 56;
 
 	GameLoop();
 	ClearResources();
