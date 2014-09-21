@@ -4,6 +4,7 @@
 Chunk::Chunk()
 {
 	pn = PerlinNoise(420);
+	fn = FractalNoise();
 }
 
 
@@ -57,15 +58,64 @@ void Chunk::PutBlockAt(int x, int y, int z, char type)
 	//blocks[cX][cZ][bIndex]++;
 }
 
-int Chunk::GetBlocks(int x, int z)
+bool Chunk::IsGenerated(int x, int z)
 {
-	if (generated[x][z] == NULL || !generated[x][z])
+	return (!generated[x][z] == NULL && generated[x][z]);
+		
+}
+
+void Chunk::GetBlocks(int x, int z)
+{
+	mutexes[x][z].lock();
+
+	if (!IsGenerated(x, z))
 		GenBlocks(x, z);
 
-	return PosToIndex(x * Chunk::SIDE, z * Chunk::SIDE);
+	mutexes[x][z].unlock();
 }
 
 void Chunk::GenBlocks(int x, int z)
+{
+	//std::cout << "Generating chunks.." << std::endl;
+
+	int bX = x * Chunk::SIDE;
+	int bZ = z * Chunk::SIDE;
+
+	char*** blocks = new char**[SIDE];
+	for (int xx = 0; xx < SIDE; xx++)
+	{
+		blocks[xx] = new char*[SIDE];
+		for (int yy = 0; yy < SIDE; yy++)
+		{
+			blocks[xx][yy] = new char[HEIGHT];
+		}
+	}
+
+	chunks[x][z] = &blocks[0];
+
+	//double avg = 0;
+
+	for (int i = 0; i < SIDE; i++)
+	{
+		for (int j = 0; j < SIDE; j++)
+		{
+			for (int k = 0; k < HEIGHT; k++)
+			{
+				double n = fn.Get(i + bX, j + bZ, k);
+				//avg += n;
+
+				blocks[i][j][k] = (n > (double)k / (double)HEIGHT) ? 1 : 0;
+			}
+		}
+	}
+
+	//avg = avg / SIDE / SIDE / HEIGHT;
+	//std::cout << avg << std::endl;
+
+	generated[x][z] = true;
+}
+
+/*void Chunk::GenBlocks(int x, int z)
 {
 	//std::cout << "Generating chunks.." << std::endl;
 
@@ -103,4 +153,4 @@ void Chunk::GenBlocks(int x, int z)
 	}
 
 	generated[x][z] = true;
-}
+}*/

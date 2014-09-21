@@ -133,7 +133,7 @@ void main()
 		// Specular : reflective highlight, like a mirror
 		visibility * MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5);
 		
-	//gl_FragColor = vec4(col, 1);
+	//gl_FragColor = vec4(col, 0.5);
 	
 /*	
 	vec3 difPos = abs(local * 2 - normal);

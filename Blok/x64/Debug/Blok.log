@@ -1,33 +1,94 @@
-﻿Build started 21.9.2014 3:58:58.
+﻿Build started 22.9.2014 0:57:30.
      1>Project "D:\Documents\GitHub\BLOK\Blok\Blok.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\include /I..\include\ANL /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Chunk.cpp main.cpp
+         Chunk.cpp
+         Generating Code...
+         Compiling...
          main.cpp
-     1>main.cpp(270): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(271): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(272): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(285): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(316): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(319): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(321): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(331): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(333): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(348): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(350): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(422): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(423): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(434): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(437): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(446): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(447): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(455): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(458): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(524): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(313): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(314): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(315): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>main.cpp(328): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(359): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(362): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(364): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(374): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(376): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(391): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(393): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(409): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(411): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(433): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(440): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
      1>main.cpp(525): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(567): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(526): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(537): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(540): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(549): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(550): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(558): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(561): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>main.cpp(667): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(668): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>main.cpp(710): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
          GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib glew32.lib opengl32.lib glu32.lib SDL2.lib SDL2main.lib assimp.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.lib" /MACHINE:X64 x64\Debug\Chunk.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib glew32.lib opengl32.lib glu32.lib SDL2.lib SDL2main.lib assimp.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.lib" /MACHINE:X64 x64\Debug\arrayoperations.obj
+         x64\Debug\cellulargen.obj
+         x64\Debug\hsv.obj
+         x64\Debug\implicitautocorrect.obj
+         x64\Debug\implicitbasisfunction.obj
+         x64\Debug\implicitbias.obj
+         x64\Debug\implicitblend.obj
+         x64\Debug\implicitbrightcontrast.obj
+         x64\Debug\implicitcache.obj
+         x64\Debug\implicitcellular.obj
+         x64\Debug\implicitclamp.obj
+         x64\Debug\implicitcombiner.obj
+         x64\Debug\implicitconstant.obj
+         x64\Debug\implicitcos.obj
+         x64\Debug\implicitcurve.obj
+         x64\Debug\implicitextractrgbachannel.obj
+         x64\Debug\implicitfloor.obj
+         x64\Debug\implicitfractal.obj
+         x64\Debug\implicitfunctiongradient.obj
+         x64\Debug\implicitgain.obj
+         x64\Debug\implicitgradient.obj
+         x64\Debug\implicitmagnitude.obj
+         x64\Debug\implicitmodulebase.obj
+         x64\Debug\implicitnormalizecoords.obj
+         x64\Debug\implicitpow.obj
+         x64\Debug\implicitrgbadotproduct.obj
+         x64\Debug\implicitrotatedomain.obj
+         x64\Debug\implicitsawtooth.obj
+         x64\Debug\implicitscaledomain.obj
+         x64\Debug\implicitscaleoffset.obj
+         x64\Debug\implicitselect.obj
+         x64\Debug\implicitsin.obj
+         x64\Debug\implicitsphere.obj
+         x64\Debug\implicittiers.obj
+         x64\Debug\implicittranslatedomain.obj
+         x64\Debug\implicittriangle.obj
+         x64\Debug\mapping.obj
+         x64\Debug\noise_gen.obj
+         x64\Debug\noise_lut.obj
+         x64\Debug\rasterization.obj
+         x64\Debug\rgbablend.obj
+         x64\Debug\rgbablendops.obj
+         x64\Debug\rgbacolorops.obj
+         x64\Debug\rgbacomposechannels.obj
+         x64\Debug\rgbaconstant.obj
+         x64\Debug\rgbacurve.obj
+         x64\Debug\rgbahsvtorgba.obj
+         x64\Debug\rgbaimplicitgrayscale.obj
+         x64\Debug\rgbanormalize.obj
+         x64\Debug\rgbargbatohsv.obj
+         x64\Debug\rgbarotatecolor.obj
+         x64\Debug\rgbaselect.obj
+         x64\Debug\Chunk.obj
+         x64\Debug\FractalNoise.obj
          x64\Debug\main.obj
          x64\Debug\PerlinNoise.obj
          x64\Debug\shader.obj
@@ -37,4 +98,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.72
+Time Elapsed 00:00:01.22

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\ANL">
+      <UniqueIdentifier>{07b4cf13-112e-4ac7-8b3f-7ad5c3c8f2ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PerlinNoise.cpp">
@@ -30,6 +33,165 @@
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\ANL\arrayoperations.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\cellulargen.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\hsv.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitautocorrect.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitbasisfunction.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitbias.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitblend.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitbrightcontrast.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitcache.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitcellular.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitclamp.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitcombiner.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitconstant.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitcos.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitcurve.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitextractrgbachannel.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitfloor.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitfractal.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitfunctiongradient.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitgain.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitgradient.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitmagnitude.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitmodulebase.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitnormalizecoords.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitpow.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitrgbadotproduct.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitrotatedomain.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitsawtooth.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitscaledomain.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitscaleoffset.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitselect.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitsin.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicitsphere.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicittiers.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicittranslatedomain.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\implicittriangle.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\mapping.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\noise_gen.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\noise_lut.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rasterization.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbablend.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbablendops.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbacolorops.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbacomposechannels.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbaconstant.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbacurve.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbahsvtorgba.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbaimplicitgrayscale.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbanormalize.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbargbatohsv.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbarotatecolor.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ANL\rgbaselect.cpp">
+      <Filter>Source Files\ANL</Filter>
+    </ClCompile>
+    <ClCompile Include="FractalNoise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PerlinNoise.h">
@@ -42,6 +204,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextureLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ANL\noiselut.h">
+      <Filter>Source Files\ANL</Filter>
+    </ClInclude>
+    <ClInclude Include="FractalNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

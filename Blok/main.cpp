@@ -26,6 +26,8 @@
 int w = 1024;
 int h = 512;
 
+bool quit = false;
+
 int BLOCKS0 = 0;
 int BLOCKS1 = 0;
 bool blockBuilderDone = true;
@@ -37,7 +39,7 @@ std::thread blockBuilder;
 int blockFrameCount = -1;
 
 int CHUNK_LOAD_DIST = 32;
-glm::vec3 pos = glm::vec3(Chunk::HALF_WORLD, 85.0f, Chunk::HALF_WORLD);
+glm::vec3 pos = glm::vec3(Chunk::HALF_WORLD, 257.0f, Chunk::HALF_WORLD);
 float pitch = 0.0f;
 float yaw = 0.0f;
 
@@ -248,24 +250,65 @@ void AddChunkToList(int x, int z, GLfloat* blocks)
 	int cX = x; //x;
 	int cZ = z; // z;
 
-	int cBlockIndex = chunk->GetBlocks(cX, cZ);
+	bool north = false;
+	bool east = false;
+	bool south = false;
+	bool west = false;
+
+	char*** northBA = nullptr;
+	char*** eastBA = nullptr;
+	char*** southBA = nullptr;
+	char*** westBA = nullptr;
+
+	if (!chunk->IsGenerated(cX, cZ))
+		return;
 
 	char*** blockArray = chunk->chunks[cX][cZ];
+
+	if (chunk->IsGenerated(cX, cZ + 1))
+	{
+		north = true;
+		northBA = chunk->chunks[cX][cZ + 1];
+	}
+
+	if (chunk->IsGenerated(cX + 1, cZ))
+	{
+		east = true;
+		eastBA = chunk->chunks[cX + 1][cZ];
+	}
+
+	if (chunk->IsGenerated(cX, cZ - 1))
+	{
+		south = true;
+		southBA = chunk->chunks[cX][cZ - 1];
+	}
+
+	if (chunk->IsGenerated(cX - 1, cZ))
+	{
+		west = true;
+		westBA = chunk->chunks[cX - 1][cZ];
+	}
+
 	for (int i = 0; i < Chunk::SIDE; i++)
 	{
 		for (int j = 0; j < Chunk::SIDE; j++)
 		{
-			for (int k = 0; k < Chunk::HEIGHT; k++)
+			for (int k = 1; k < Chunk::HEIGHT; k++)
 			{
 				if (blockArray[i][j][k] == 1 && 
 					(k == Chunk::HEIGHT - 1 ||
+					blockArray[i][j][k - 1] == 0 ||
 					blockArray[i][j][k + 1] == 0 ||
-					i == Chunk::SIDE - 1 || i == 0 ||
-					blockArray[i + 1][j][k] == 0 ||
-					blockArray[i - 1][j][k] == 0 ||
-					j == Chunk::SIDE - 1 || j == 0 ||
-					blockArray[i][j + 1][k] == 0 ||
-					blockArray[i][j - 1][k] == 0))
+
+					(i == Chunk::SIDE - 1 && east && eastBA[0][j][k] == 0) ||
+					(i == 0 && west && westBA[Chunk::SIDE - 1][j][k] == 0) ||
+					(i != Chunk::SIDE - 1 && blockArray[i + 1][j][k] == 0) ||
+					(i != 0 && blockArray[i - 1][j][k] == 0) ||
+
+					(j == Chunk::SIDE - 1 && north && northBA[i][0][k] == 0) ||
+					(j == 0 && south && southBA[i][Chunk::SIDE - 1][k] == 0) ||
+					(j != Chunk::SIDE - 1 && blockArray[i][j + 1][k] == 0) ||
+					(j != 0 && blockArray[i][j - 1][k] == 0)))
 				{
 					blocks[nextIndex * 3 + 0] = cX * Chunk::SIDE + i;
 					blocks[nextIndex * 3 + 1] = k;
@@ -343,6 +386,24 @@ void MoveRelative(KeyCode key)
 
 void BuildBlockList(GLfloat* blocks, int* blockCount)
 {
+	std::vector<std::thread> threads;
+
+	for (int x = (pos.x - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
+	{
+		for (int z = (pos.z - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z < (pos.z + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z++)
+		{
+			if (!chunk->IsGenerated(x, z))
+			{
+				threads.push_back(std::thread(&Chunk::GetBlocks, chunk, x, z));
+			}
+		}
+	}
+
+	for (std::vector<std::thread>::iterator t = threads.begin(); t != threads.end(); ++t)
+	{
+		t->join();
+	}
+
 	nextIndex = 0;
 
 	for (int x = (pos.x - (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
@@ -364,10 +425,52 @@ void BuildBlockList(GLfloat* blocks, int* blockCount)
 	blockBuilderDone = true;
 }
 
+void GenerateChunksBackground()
+{
+	for (;;)
+	{
+		int BG_CHUNK_LOAD_DIST = CHUNK_LOAD_DIST + 1;
+		for (int x = (pos.x - (BG_CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x < (pos.x + (BG_CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; x++)
+		{
+			if (quit)
+				break;
+
+			std::vector<std::thread> threads;
+
+			for (int z = (pos.z - (BG_CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z < (pos.z + (BG_CHUNK_LOAD_DIST * Chunk::SIDE)) / Chunk::SIDE; z++)
+			{
+				if (!chunk->IsGenerated(x, z))
+				{
+					threads.push_back(std::thread(&Chunk::GetBlocks, chunk, x, z));
+				}
+
+				if (quit)
+					break;
+			}
+
+			if (threads.size() == 0)
+			{
+				SDL_Delay(10);
+				continue;
+			}
+
+			std::cout << "Background builder: building " << threads.size() << " chunks" << std::endl;
+			for (std::vector<std::thread>::iterator t = threads.begin(); t != threads.end(); ++t)
+			{
+				t->join();
+			}
+			std::cout << "Background builder: Done!" << std::endl;
+		}
+
+		if (quit)
+			break;
+	}
+}
+
 void GameLoop()
 {
-	bool quit = false;
 	chunk = new Chunk();
+	std::thread backgoundBuilder = std::thread(GenerateChunksBackground);
 
 	while (!quit)
 	{
@@ -461,6 +564,46 @@ void GameLoop()
 					}
 					break;
 				}
+
+				case SDLK_1:
+					CHUNK_LOAD_DIST = 1;
+					break;
+
+				case SDLK_2:
+					CHUNK_LOAD_DIST = 2;
+					break;
+
+				case SDLK_3:
+					CHUNK_LOAD_DIST = 3;
+					break;
+
+				case SDLK_4:
+					CHUNK_LOAD_DIST = 4;
+					break;
+
+				case SDLK_5:
+					CHUNK_LOAD_DIST = 5;
+					break;
+
+				case SDLK_6:
+					CHUNK_LOAD_DIST = 6;
+					break;
+
+				case SDLK_7:
+					CHUNK_LOAD_DIST = 7;
+					break;
+
+				case SDLK_8:
+					CHUNK_LOAD_DIST = 8;
+					break;
+
+				case SDLK_9:
+					CHUNK_LOAD_DIST = 9;
+					break;
+
+				case SDLK_RETURN:
+					pos = glm::vec3(Chunk::HALF_WORLD, 257.0f, Chunk::HALF_WORLD);
+					break;
 				}
 			}
 
@@ -532,7 +675,7 @@ void GameLoop()
 		unsigned int wBuildStart = SDL_GetTicks();
 
 		// Build list of blocks
-		if (blockBuilderDone && blockFrameCount == -1 || blockFrameCount >= 6)
+		if (blockBuilderDone && (blockFrameCount == -1 || blockFrameCount >= 6))
 		{
 			blockBuilderDone = false;
 			blockFrameCount = 0;
@@ -661,12 +804,14 @@ void GameLoop()
 		SDL_GL_SwapWindow(window);
 		blockFrameCount++;
 
-		std::cout << (SDL_GetTicks() - wBuildStart) << std::endl;
+		//std::cout << (SDL_GetTicks() - wBuildStart) << std::endl;
 
 		SDL_Delay(10);
 		checkSDLError(__LINE__);
 		PrintGLError();
 	}	// END LOOP
+
+	backgoundBuilder.join();
 }
 
 bool InitResources()
@@ -837,7 +982,7 @@ int main(int argc, char *argv[])
 	}
 
 	//std::cin >> CHUNK_LOAD_DIST;
-	CHUNK_LOAD_DIST = 2;// 56;
+	CHUNK_LOAD_DIST = 1;// 56;
 
 	GameLoop();
 	ClearResources();

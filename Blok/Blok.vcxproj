@@ -101,7 +101,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\include\ANL</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,14 +157,69 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ANL\arrayoperations.cpp" />
+    <ClCompile Include="..\ANL\cellulargen.cpp" />
+    <ClCompile Include="..\ANL\hsv.cpp" />
+    <ClCompile Include="..\ANL\implicitautocorrect.cpp" />
+    <ClCompile Include="..\ANL\implicitbasisfunction.cpp" />
+    <ClCompile Include="..\ANL\implicitbias.cpp" />
+    <ClCompile Include="..\ANL\implicitblend.cpp" />
+    <ClCompile Include="..\ANL\implicitbrightcontrast.cpp" />
+    <ClCompile Include="..\ANL\implicitcache.cpp" />
+    <ClCompile Include="..\ANL\implicitcellular.cpp" />
+    <ClCompile Include="..\ANL\implicitclamp.cpp" />
+    <ClCompile Include="..\ANL\implicitcombiner.cpp" />
+    <ClCompile Include="..\ANL\implicitconstant.cpp" />
+    <ClCompile Include="..\ANL\implicitcos.cpp" />
+    <ClCompile Include="..\ANL\implicitcurve.cpp" />
+    <ClCompile Include="..\ANL\implicitextractrgbachannel.cpp" />
+    <ClCompile Include="..\ANL\implicitfloor.cpp" />
+    <ClCompile Include="..\ANL\implicitfractal.cpp" />
+    <ClCompile Include="..\ANL\implicitfunctiongradient.cpp" />
+    <ClCompile Include="..\ANL\implicitgain.cpp" />
+    <ClCompile Include="..\ANL\implicitgradient.cpp" />
+    <ClCompile Include="..\ANL\implicitmagnitude.cpp" />
+    <ClCompile Include="..\ANL\implicitmodulebase.cpp" />
+    <ClCompile Include="..\ANL\implicitnormalizecoords.cpp" />
+    <ClCompile Include="..\ANL\implicitpow.cpp" />
+    <ClCompile Include="..\ANL\implicitrgbadotproduct.cpp" />
+    <ClCompile Include="..\ANL\implicitrotatedomain.cpp" />
+    <ClCompile Include="..\ANL\implicitsawtooth.cpp" />
+    <ClCompile Include="..\ANL\implicitscaledomain.cpp" />
+    <ClCompile Include="..\ANL\implicitscaleoffset.cpp" />
+    <ClCompile Include="..\ANL\implicitselect.cpp" />
+    <ClCompile Include="..\ANL\implicitsin.cpp" />
+    <ClCompile Include="..\ANL\implicitsphere.cpp" />
+    <ClCompile Include="..\ANL\implicittiers.cpp" />
+    <ClCompile Include="..\ANL\implicittranslatedomain.cpp" />
+    <ClCompile Include="..\ANL\implicittriangle.cpp" />
+    <ClCompile Include="..\ANL\mapping.cpp" />
+    <ClCompile Include="..\ANL\noise_gen.cpp" />
+    <ClCompile Include="..\ANL\noise_lut.cpp" />
+    <ClCompile Include="..\ANL\rasterization.cpp" />
+    <ClCompile Include="..\ANL\rgbablend.cpp" />
+    <ClCompile Include="..\ANL\rgbablendops.cpp" />
+    <ClCompile Include="..\ANL\rgbacolorops.cpp" />
+    <ClCompile Include="..\ANL\rgbacomposechannels.cpp" />
+    <ClCompile Include="..\ANL\rgbaconstant.cpp" />
+    <ClCompile Include="..\ANL\rgbacurve.cpp" />
+    <ClCompile Include="..\ANL\rgbahsvtorgba.cpp" />
+    <ClCompile Include="..\ANL\rgbaimplicitgrayscale.cpp" />
+    <ClCompile Include="..\ANL\rgbanormalize.cpp" />
+    <ClCompile Include="..\ANL\rgbargbatohsv.cpp" />
+    <ClCompile Include="..\ANL\rgbarotatecolor.cpp" />
+    <ClCompile Include="..\ANL\rgbaselect.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="FractalNoise.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ANL\noiselut.h" />
     <ClInclude Include="Chunk.h" />
+    <ClInclude Include="FractalNoise.h" />
     <ClInclude Include="PerlinNoise.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="TextureLoader.h" />
