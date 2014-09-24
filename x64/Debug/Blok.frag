@@ -12,11 +12,11 @@ in vec3 EyeDirection_cameraspace;
 in vec3 LightDirection_cameraspace;
 in vec4 ShadowCoord;
 in float height;
-in float stone;
+in float type;
 
 uniform mat4 MV;
-uniform vec3 LightPosition_worldspace;
-uniform sampler2D mainText;
+//uniform vec3 LightPosition_worldspace;
+//uniform sampler2D mainText;
 uniform sampler2D stoneText;
 uniform sampler2DShadow shadowMap;
 
@@ -53,16 +53,22 @@ void main()
 	float LightPower = 1.0f;
 	
 	vec3 MaterialDiffuseColor;
+	vec3 TypeColor = vec3(0.0, 0.0, 0.0);
+	
+	if (type > 5.5)
+		TypeColor = vec3(-0.2, -0.2, -0.2);
+	else if (type > 4.5)
+		TypeColor = vec3(0.5, 0.5, 1.0);
+	else if (type > 3.5)
+		TypeColor = vec3(0.3, 0.3, 0.2);
+	else if (type > 2.5)
+		TypeColor = vec3(0.0, 0.0, 0.0);
+	else
+		TypeColor = vec3(0.4, 0.4, 0.2);
 	
 	// Material properties
-	if (stone > -0.25)
-	{
-		MaterialDiffuseColor = texture2D(mainText, UV ).rgb;
-	}
-	else
-	{
-		MaterialDiffuseColor = texture2D(stoneText, UV).rgb;
-	}
+	MaterialDiffuseColor = texture2D(stoneText, UV ).rgb + TypeColor;
+	//MaterialDiffuseColor = TypeColor;
 	
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
 	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
@@ -122,10 +128,10 @@ void main()
 	// if ( texture( shadowMap, (ShadowCoord.xy/ShadowCoord.w) ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
 	// if ( textureProj( shadowMap, ShadowCoord.xyw ).z  <  (ShadowCoord.z-bias)/ShadowCoord.w )
 	
-	visibility -= height;
+	//visibility -= height;
 	
-	gl_FragColor.rgb = 
-	//vec3 col =
+	//gl_FragColor.rgb = 
+	vec3 col =
 		// Ambient : simulates indirect lighting
 		MaterialAmbientColor +
 		// Diffuse : "color" of the object
@@ -133,26 +139,5 @@ void main()
 		// Specular : reflective highlight, like a mirror
 		visibility * MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5);
 		
-	//gl_FragColor = vec4(col, 0.5);
-	
-/*	
-	vec3 difPos = abs(local * 2 - normal);
-	
-	float cX = 1.0 - difPos.x;
-	cX *= 5.0;
-	cX = min(cX, 1.0);
-	
-	float cY = 1.0 - difPos.y;
-	cY *= 5.0;
-	cY = min(cY, 1.0);
-	
-	float cZ = 1.0 - difPos.z;
-	cZ *= 5.0;
-	cZ = min(cZ, 1.0);
-	
-	float center = cX * cY * cZ;
-		
-	gl_FragColor.rgb = visibility * 
-	MaterialDiffuseColor * center;
-*/
+	gl_FragColor = vec4(col, 0.5);
 }

@@ -9,7 +9,7 @@
 #include <SDL_image.h>
 
 
-GLuint LoadTexture(const char * file_path)
+GLuint ZZLoadTexture(const char * file_path)
 {
 	// Data read from the header of the BMP file
 	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
@@ -72,7 +72,7 @@ GLuint LoadTexture(const char * file_path)
 	return textureID;
 }
 
-GLuint ZZLoadTexture(const char * file_path)
+GLuint LoadTexture(const char * file_path)
 {
 	GLuint texID;
 
@@ -104,7 +104,7 @@ GLuint ZZLoadTexture(const char * file_path)
 	//                         any value that fits in one byte (so 0 through 255).  These values are to be interpreted as
 	//                         *unsigned* values (since 0x00 should be dark and 0xFF should be bright).
 	// surface->pixels:    The actual data.  As above, SDL's array of bytes.
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
 	//Set the minification and magnification filters.  In this case, when the texture is minified (i.e., the texture's pixels (texels) are
 	//*smaller* than the screen pixels you're seeing them on, linearly filter them (i.e. blend them together).  This blends four texels for
 	//each sample--which is not very much.  Mipmapping can give better results.  Find a texturing tutorial that discusses these issues

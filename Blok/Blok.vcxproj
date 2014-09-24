@@ -99,7 +99,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\include;..\include\ANL</AdditionalIncludeDirectories>
     </ClCompile>
@@ -209,20 +209,53 @@
     <ClCompile Include="..\ANL\rgbargbatohsv.cpp" />
     <ClCompile Include="..\ANL\rgbarotatecolor.cpp" />
     <ClCompile Include="..\ANL\rgbaselect.cpp" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="ErrorHandler.cpp" />
     <ClCompile Include="FractalNoise.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="ZZmain.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="WindowMgr.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldBuilder.cpp" />
+    <ClCompile Include="WorldRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ANL\noiselut.h" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Chunk.h" />
+    <ClInclude Include="ErrorHandler.h" />
     <ClInclude Include="FractalNoise.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="InputMgr.h" />
+    <ClInclude Include="ModelLoader.h" />
+    <ClInclude Include="Pawn.h" />
     <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="shader.hpp" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="WindowMgr.h" />
+    <ClInclude Include="World.h" />
+    <ClInclude Include="WorldBuilder.h" />
+    <ClInclude Include="WorldRenderer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

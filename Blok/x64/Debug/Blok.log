@@ -1,40 +1,6 @@
-﻿Build started 22.9.2014 0:57:30.
+﻿Build started 24.9.2014 19:19:11.
      1>Project "D:\Documents\GitHub\BLOK\Blok\Blok.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I..\include /I..\include\ANL /Zi /nologo /W3 /WX- /sdl /Od /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt Chunk.cpp main.cpp
-         Chunk.cpp
-         Generating Code...
-         Compiling...
-         main.cpp
-     1>main.cpp(313): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(314): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(315): warning C4244: '=' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>main.cpp(328): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(359): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(362): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(364): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(374): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(376): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(391): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(393): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(409): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(411): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(433): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(440): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(525): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(526): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(537): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(540): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(549): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(550): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(558): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(561): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>main.cpp(667): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(668): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>main.cpp(710): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-         GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-         Generating Code...
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib glew32.lib opengl32.lib glu32.lib SDL2.lib SDL2main.lib assimp.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\GitHub\BLOK\x64\Debug\Blok.lib" /MACHINE:X64 x64\Debug\arrayoperations.obj
          x64\Debug\cellulargen.obj
          x64\Debug\hsv.obj
@@ -87,15 +53,31 @@
          x64\Debug\rgbargbatohsv.obj
          x64\Debug\rgbarotatecolor.obj
          x64\Debug\rgbaselect.obj
+         x64\Debug\Actor.obj
+         x64\Debug\Block.obj
          x64\Debug\Chunk.obj
+         x64\Debug\ErrorHandler.obj
          x64\Debug\FractalNoise.obj
+         x64\Debug\Game.obj
+         x64\Debug\InputMgr.obj
          x64\Debug\main.obj
+         x64\Debug\ModelLoader.obj
+         x64\Debug\Renderer.obj
+         x64\Debug\Time.obj
+         x64\Debug\Pawn.obj
          x64\Debug\PerlinNoise.obj
+         x64\Debug\Player.obj
          x64\Debug\shader.obj
+         x64\Debug\SkyBox.obj
          x64\Debug\TextureLoader.obj
+         x64\Debug\WindowMgr.obj
+         x64\Debug\World.obj
+         x64\Debug\WorldBuilder.obj
+         x64\Debug\WorldRenderer.obj
+     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
          Blok.vcxproj -> D:\Documents\GitHub\BLOK\x64\Debug\Blok.exe
      1>Done Building Project "D:\Documents\GitHub\BLOK\Blok\Blok.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.22
+Time Elapsed 00:00:00.26

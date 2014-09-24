@@ -11,11 +11,8 @@ public:
 	double Get(int x, int y, int z);
 
 private:
-	anl::CImplicitCombiner* combiner;
-	anl::CImplicitAutoCorrect* noise;
+	anl::CImplicitCombiner* noise;
 
 	anl::CMWC4096 rnd;
-	anl::CImplicitFractal* frac1;
-	anl::CImplicitFractal* frac2;
 };
 

@@ -2,7 +2,7 @@
 attribute  vec3 in_Position;
 attribute  vec2 in_UV;
 attribute  vec3 in_Normal;
-attribute  vec3 xyz;
+attribute  vec4 xyzt;
 
 varying vec3 local;
 varying vec3 normal;
@@ -13,7 +13,7 @@ varying vec3 LightDirection_cameraspace;
 varying vec4 ShadowCoord;
 varying vec3 Normal_cameraspace;
 varying float height;
-varying float stone;
+varying float type;
 
 uniform mat4 V;
 uniform vec3 LightInvDirection_worldspace;
@@ -31,8 +31,9 @@ void main()
 	local = in_Position;
 	normal = in_Normal;
 	
-	vec3 wPos = in_Position + xyz;
-    gl_Position = VP * vec4(wPos, 1.0);	
+	vec3 wPos = in_Position + xyzt.xyz;
+	//vec3 wPos = in_Position + vec3(xyzt.x, xyzt.y, xyzt.z);
+    gl_Position = VP * vec4(wPos, 1.0);
 	
 	ShadowCoord = DepthBiasMVP * vec4(wPos, 1);
 	Position_worldspace = wPos;
@@ -43,8 +44,8 @@ void main()
 	Normal_cameraspace = ( V * vec4(in_Normal, 0)).xyz;
 	
 	UV = in_UV;
-	float h = xyz.y / 50;
+	float h = xyzt.y / 50;
 	height = 1.0 - (h * h);
 	
-	stone = random(vec3(floor(xyz.x), floor(xyz.y), floor(xyz.z)), 12) / 10 - height;
+	type = xyzt.w;
 }
